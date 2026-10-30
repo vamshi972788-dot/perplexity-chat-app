@@ -12,13 +12,13 @@ app.use(express.json());
 app.use(express.static("./public"));
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://perplexity-chat-app.onrender.com",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 app.use(morgan("dev"));
  
-    
+
 
 app.use("/api/auth",authRouter)
 app.use("/api/chats",chatRouter)
