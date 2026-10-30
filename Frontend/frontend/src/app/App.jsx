@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RouterProvider } from 'react-router'
+import { RouterProvider } from 'react-router-dom'
 import { router } from './app.router.jsx'
 import { getme } from './feactures/auth/services/auth.api.js'
 import {
