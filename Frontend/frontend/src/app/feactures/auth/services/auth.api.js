@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://YOUR-BACKEND-NAME.onrender.com",
+    baseURL: "https://perplexity-chat-app.onrender.com",
     withCredentials: true,
 })
 
