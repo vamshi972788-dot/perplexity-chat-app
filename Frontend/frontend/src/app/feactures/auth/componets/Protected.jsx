@@ -1,6 +1,6 @@
 
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router'
+import { Navigate } from 'react-router-dom'
 
 const Protected = ({children}) => {
 
