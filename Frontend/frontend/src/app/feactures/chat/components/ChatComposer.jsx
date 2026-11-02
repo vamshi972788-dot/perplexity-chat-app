@@ -44,7 +44,6 @@ function ChatComposer({
               : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-700 dark:hover:text-slate-200'
           }`}
         >
-          <Icon name="search" className="h-4 w-4" />
           <span>Search</span>
         </button>
         <button
