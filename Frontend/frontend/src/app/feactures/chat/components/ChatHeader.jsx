@@ -7,10 +7,9 @@ function ChatHeader({ isDark, onToggleSidebar, onToggleTheme, title }) {
         type="button"
         aria-label="Toggle sidebar"
         onClick={onToggleSidebar}
-        className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+        className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 md:hidden"
       >
-        <Icon name="panel" className="hidden h-5 w-5 md:block" />
-        <Icon name="menu" className="h-5 w-5 md:hidden" />
+        <Icon name="menu" className="h-5 w-5" />
       </button>
       <span className="hidden max-w-[60%] truncate text-sm font-medium text-slate-600 dark:text-slate-300 md:inline">
         {title || 'New Chat'}
