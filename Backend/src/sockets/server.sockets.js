@@ -2,12 +2,19 @@
 import { Server } from "socket.io";
 
 let io;
+const allowedOrigins = [
+    "https://perplexity-chat-app.onrender.com",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173"
+];
 
 export const initSocket = (httpServer) => {
 
     io = new Server(httpServer, {
         cors: {
-            origin: "https://perplexity-chat-app.onrender.com",
+            origin: allowedOrigins,
             credentials: true,
             methods: ["GET", "POST"]
         }

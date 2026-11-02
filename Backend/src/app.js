@@ -34,6 +34,13 @@ import morgan from "morgan";
 import chatRouter from "./routes/chat.routes.js";
 
 const app = express();
+const allowedOrigins = [
+    "https://perplexity-chat-app.onrender.com",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173"
+];
 
 app.use(express.json());
 
@@ -41,7 +48,7 @@ app.use(express.static("./public"));
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "https://perplexity-chat-app.onrender.com",
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
