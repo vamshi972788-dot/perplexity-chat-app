@@ -1,17 +1,32 @@
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useAuth } from '../hooks/useAuth.js'
 
 const Register = () => {
   const navigate = useNavigate()
+  const { handleRegister } = useAuth()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false)
+  const loading = useSelector((state) => state.auth.loading)
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    setMessage('Your form is ready to connect to an authentication service.')
+    setMessage('')
+    setIsSubmitting(true)
+
+    try {
+      const result = await handleRegister({ username, email, password })
+      setMessage(result.message)
+      setIsRegistered(result.success)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -70,10 +85,10 @@ const Register = () => {
             />
           </div>
 
-          <button type="submit" className="w-full rounded-xl bg-[#20B8CD] px-4 py-3 font-semibold text-[#101414] transition hover:bg-[#38C6D8] focus:outline-none focus:ring-2 focus:ring-[#20B8CD] focus:ring-offset-2 focus:ring-offset-[#191A1A]">
-            Create account
+          <button type="submit" disabled={isSubmitting || loading || isRegistered} className="w-full rounded-xl bg-[#20B8CD] px-4 py-3 font-semibold text-[#101414] transition hover:bg-[#38C6D8] focus:outline-none focus:ring-2 focus:ring-[#20B8CD] focus:ring-offset-2 focus:ring-offset-[#191A1A] disabled:cursor-wait disabled:opacity-60">
+            {isSubmitting ? 'Creating account...' : 'Create account'}
           </button>
-          <p aria-live="polite" className="min-h-5 text-center text-sm text-white/80">{message}</p>
+          <p aria-live="polite" className={`min-h-5 text-center text-sm ${isRegistered ? 'text-emerald-300' : 'text-white/80'}`}>{message}</p>
         </form>
 
         <p className="mt-5 text-center text-sm text-white/60">

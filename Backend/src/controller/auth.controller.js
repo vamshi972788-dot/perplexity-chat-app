@@ -28,18 +28,37 @@ export async function register(req,res,next){
         email:user.email
     },process.env.JWT_SECRET,{expiresIn:"1d"})
 
-    await sendEmail({
-        to:email,
-        subject:"welcome to perplexity",
-        html:`
-             <p>Hi ${username}</p>
-             <p>Thank you for registering <strong>perpelxity.we are excited have you on perplexity </strong> </p>
-             <p>please verify your email address by cilcking the link below </p>
-             <a href="https://perplexity-chat-app.onrender.com/api/auth/verify-email?token=${emailverficationToken}">Verify Email</a>
-             <p>best regards,<br>The perplexity Team</p>
-          
-        `
-    });
+    try {
+        await sendEmail({
+            to:email,
+            subject:"welcome to perplexity",
+            html:`
+                 <p>Hi ${username}</p>
+                 <p>Thank you for registering <strong>perpelxity.we are excited have you on perplexity </strong> </p>
+                 <p>please verify your email address by cilcking the link below </p>
+                 <a href="https://perplexity-chat-app.onrender.com/api/auth/verify-email?token=${emailverficationToken}">Verify Email</a>
+                 <p>best regards,<br>The perplexity Team</p>
+
+            `
+        });
+    } catch (error) {
+        console.error("Registration verification email failed:", error);
+
+        try {
+            await usermodel.deleteOne({ _id: user._id, verified: false });
+        } catch (cleanupError) {
+            console.error("Could not remove unverified account after email failure:", cleanupError);
+            return res.status(500).json({
+                message:"Registration failed. Please contact support before trying again.",
+                success:false
+            });
+        }
+
+        return res.status(503).json({
+            message:"Could not send the verification email. Please try again later.",
+            success:false
+        });
+    }
 
     res.status(201).json({
         message:"user registerd successfully",
@@ -175,8 +194,6 @@ export function logout(req, res){
         success:true
     })
 }
-
-
 
 
 

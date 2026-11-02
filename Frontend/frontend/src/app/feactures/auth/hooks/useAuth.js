@@ -12,9 +12,18 @@ export function useAuth(){
 
         try{
             dispatch(setLoading(true))
-            await register({username,email,password})
+            const response = await register({username,email,password})
+            return {
+                success: response.success,
+                message: response.message || 'Account created. Please check your email to verify it.',
+            }
         } catch (error) {
-            dispatch(setError(error.response?.data?.message || "Registration failed"))
+            const message = error.response?.data?.message
+                || error.response?.data?.Message
+                || error.response?.data?.errors?.[0]?.msg
+                || "Registration failed. Please try again later."
+            dispatch(setError(message))
+            return { success: false, message }
         } finally {
             dispatch(setLoading(false))
         }
@@ -56,4 +65,3 @@ export function useAuth(){
         handleGetme
     }
 }
-
