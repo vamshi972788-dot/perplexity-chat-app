@@ -1,3 +1,5 @@
+
+
 import Icon from './Icon.jsx'
 
 function ChatSidebar({
@@ -47,7 +49,7 @@ function ChatSidebar({
             onClick={onToggleCollapse}
             className="hidden rounded-lg p-2 text-slate-500 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 md:block"
           >
-            {/* <Icon name="panel" className="h-4 w-4" /> */}
+            <Icon name="panel" className="h-4 w-4" />
           </button>
 
           <button
@@ -103,10 +105,10 @@ function ChatSidebar({
                       onSelectChat(chat)
                       onClose()
                     }}
-                    className={`min-w-0 flex-1 whitespace-normal break-words rounded-lg px-2 py-2 text-left text-sm leading-5 ${
-                      activeChatId === chat._id
-                        ? 'bg-slate-200/70 text-slate-900 dark:bg-slate-800 dark:text-white'
-                        : 'text-slate-600 hover:bg-slate-200/50 dark:text-slate-300 dark:hover:bg-slate-800/70'
+                    className={`min-w-0 flex-1 whitespace-normal break-all rounded-lg px-2 py-2 text-left text-sm leading-5  ${
+                    activeChatId === chat._id
+                    ? 'bg-slate-200/70 text-slate-900 dark:bg-slate-800 dark:text-white'
+                    : 'text-slate-600 hover:bg-slate-200/50 dark:text-slate-300 dark:hover:bg-slate-800/70'
                     } ${isCollapsed ? 'md:hidden' : ''}`}
                   >
                     {chat.title || 'New Chat'}
@@ -117,7 +119,10 @@ function ChatSidebar({
                       type="button"
                       title={chat.title || 'Open chat'}
                       aria-label={`Open ${chat.title || 'chat'}`}
-                      onClick={() => onSelectChat(chat)}
+                      onClick={() => {
+                        onSelectChat(chat)
+                        onClose()
+                      }}
                       className={`hidden rounded-lg p-2 text-slate-500 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 md:block ${
                         activeChatId === chat._id ? 'bg-slate-200 dark:bg-slate-800' : ''
                       }`}
@@ -155,6 +160,7 @@ function ChatSidebar({
               {displayName}
             </span>
           </div>
+
           <button
             type="button"
             aria-label="Log out"

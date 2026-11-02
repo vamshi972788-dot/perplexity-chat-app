@@ -161,7 +161,11 @@ export async function getchats(req,res){
 
     const user = req.user;
 
-    const chats = await chatmodel.find({user:user.id})
+    // const chats = await chatmodel.find({user:user.id})
+
+    const chats = await chatmodel
+    .find({ user: user.id })
+    .sort({ updatedAt: -1 });
     
     res.status(200).json({
         message:"chats recvied sucessfully",
@@ -184,9 +188,13 @@ export async function getmessages(req,res){
      })
    }
 
-   const messages = await messagemodel.find({
-     chat:chatId
-   })
+//    const messages = await messagemodel.find({
+//      chat:chatId
+//    })
+
+    const messages = await messagemodel
+      .find({ chat: chatId })
+      .sort({ createdAt: 1 });
 
    res.status(200).json({
      message:"messages recvied successfully",
@@ -194,28 +202,51 @@ export async function getmessages(req,res){
    })
 }
 
-export async function deletechat(req,res){
+// export async function deletechat(req,res){
 
-    const {chatId} = req.params;
+//     const {chatId} = req.params;
+
+//     const chat = await chatmodel.findOneAndDelete({
+//         _id:chatId,
+//         user:req.user.id
+//     })
+
+//     await messagemodel.deleteMany({
+//         chat:chatId
+//     })
+
+//     if(!chat){
+//        return res.status(404).json({
+//             message:"chat not found"
+//         })
+//     }
+
+//     res.status(200).json({
+//         message:"chat deleted successfully"
+//     })
+// }
+
+export async function deletechat(req, res) {
+    const { chatId } = req.params;
 
     const chat = await chatmodel.findOneAndDelete({
-        _id:chatId,
-        user:req.user.id
-    })
+        _id: chatId,
+        user: req.user.id
+    });
 
-    await messagemodel.deleteMany({
-        chat:chatId
-    })
-
-    if(!chat){
-       return res.status(404).json({
-            message:"chat not found"
-        })
+    if (!chat) {
+        return res.status(404).json({
+            message: "chat not found"
+        });
     }
 
-    res.status(200).json({
-        message:"chat deleted successfully"
-    })
+    await messagemodel.deleteMany({
+        chat: chatId
+    });
+
+    return res.status(200).json({
+        message: "chat deleted successfully"
+    });
 }
 
 

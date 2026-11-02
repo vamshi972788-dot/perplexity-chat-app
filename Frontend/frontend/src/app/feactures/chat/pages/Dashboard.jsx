@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { setUser } from '../../auth/auth.slice.js'
 import { logout } from '../../auth/services/auth.api.js'
 import ChatComposer from '../components/ChatComposer.jsx'

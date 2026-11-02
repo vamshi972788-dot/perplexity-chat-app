@@ -1,9 +1,8 @@
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth.js'
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router'
+import { useNavigate, Navigate } from 'react-router-dom'
 
 
 
@@ -36,11 +35,14 @@ const Login = () => {
     } else {
       setMessage(result.message)
     }
+
   }
 
-  if(!loading && user){
-    return <Navigate to="/" replace />
-  }
+  //   if (!loading && user) {
+//   return <Navigate to="/" replace />
+// }
+
+
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#191A1A] px-4 py-12 text-white">

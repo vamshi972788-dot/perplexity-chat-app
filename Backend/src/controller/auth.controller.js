@@ -35,7 +35,7 @@ export async function register(req,res,next){
              <p>Hi ${username}</p>
              <p>Thank you for registering <strong>perpelxity.we are excited have you on perplexity </strong> </p>
              <p>please verify your email address by cilcking the link below </p>
-             <a href="http://localhost:3000/api/auth/verify-email?token=${emailverficationToken}">Verify Email</a>
+             <a href="https://perplexity-chat-app.onrender.com/api/auth/verify-email?token=${emailverficationToken}">Verify Email</a>
              <p>best regards,<br>The perplexity Team</p>
           
         `
@@ -75,7 +75,7 @@ export async function verifyemail(req,res){
     res.send(`
         <h1>Email Verified Successfully</h1>
         <p>your email has been verified.you can now log in your account </P>
-        <a href="http://localhost:3000/api/auth/login">Go To Login</a>
+        <a href="https://perplexity-chat-app.onrender.com/login">Go To Login</a>
         `);
 }
 
@@ -116,7 +116,12 @@ export async function login(req,res){
         username:user.username
     },process.env.JWT_SECRET,{expiresIn:"1d"})
 
-    res.cookie("token",token)
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 24 * 60 * 60 * 1000
+});
 
     return res.status(200).json({
         message:"user logged In successfully",
@@ -160,7 +165,11 @@ export async function getme(req,res){
 }
 
 export function logout(req, res){
-    res.clearCookie("token");
+    res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+});
     return res.status(200).json({
         message:"user logged out successfully",
         success:true

@@ -7,8 +7,9 @@ export const initSocket = (httpServer) => {
 
     io = new Server(httpServer, {
         cors: {
-            origin: "http://localhost:5173",
-            credentials: true
+            origin: "https://perplexity-chat-app.onrender.com",
+            credentials: true,
+            methods: ["GET", "POST"]
         }
     });
 

@@ -24,13 +24,16 @@ export const registerValidation = [
         .isEmail().withMessage("Please enter a valid email"),
 
     body("password")
-        .notEmpty().withMessage("Password is required")
-        .isLength({ min: 6, max : 12 }).withMessage("Password must be at least 6 characters"),
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ min: 6, max: 72 })
+    .withMessage("Password must be at least 6 characters"),
 
         vaildate
 ];
 
 // Login validator
+
 export const loginValidator = [
     body("email")
         .trim()
@@ -43,5 +46,22 @@ export const loginValidator = [
         .notEmpty()
         .withMessage("Password is required")
         .isLength({ min: 6 })
-        .withMessage("Password must be at least 6 characters")
+        .withMessage("Password must be at least 6 characters"),
+
+    vaildate
 ];
+
+// export const loginValidator = [
+//     body("email")
+//         .trim()
+//         .notEmpty()
+//         .withMessage("Email is required")
+//         .isEmail()
+//         .withMessage("Please enter a valid email"),
+
+//     body("password")
+//         .notEmpty()
+//         .withMessage("Password is required")
+//         .isLength({ min: 6 })
+//         .withMessage("Password must be at least 6 characters")
+// ];

@@ -31,10 +31,14 @@ function ChatComposer({
       />
       <div className="flex items-center justify-between border-t border-slate-100 px-1 pt-2 dark:border-slate-700">
         <button
-          type="button"
-          aria-pressed={isSearchMode}
-          onClick={onSearchModeChange}
-          className={`flex items-center gap-2 rounded-lg px-2 py-1 text-xs transition ${
+          // type="button"
+          // aria-pressed={isSearchMode}
+          // onClick={onSearchModeChange}
+           type="button"
+           disabled={isSending}
+           aria-pressed={isSearchMode}
+           onClick={onSearchModeChange}
+           className={`flex items-center gap-2 rounded-lg px-2 py-1 text-xs transition ${
             isSearchMode
               ? 'bg-[#20b8cd]/10 text-[#087b88]'
               : 'text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-700 dark:hover:text-slate-200'
